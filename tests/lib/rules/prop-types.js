@@ -2493,7 +2493,8 @@ ruleTester.run('prop-types', rule, {
     {
       code: `
         interface Props {
-          'aria-label': string;
+          'aria-label': string // 'undefined' PropType is defined but prop is never used eslint(react/no-unused-prop-types)
+          // 'undefined' PropType is defined but prop is never used eslint(react-redux/no-unused-prop-types)
         }
 
         export default function Component({
