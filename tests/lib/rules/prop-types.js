@@ -2493,8 +2493,7 @@ ruleTester.run('prop-types', rule, {
     {
       code: `
         interface Props {
-          'aria-label': string // 'undefined' PropType is defined but prop is never used eslint(react/no-unused-prop-types)
-          // 'undefined' PropType is defined but prop is never used eslint(react-redux/no-unused-prop-types)
+          'aria-label': string;
         }
 
         export default function Component({
@@ -2503,6 +2502,51 @@ ruleTester.run('prop-types', rule, {
           return <div aria-label={ariaLabel} />
         }
       `,
+      parser: parsers.TYPESCRIPT_ESLINT
+    },
+    {
+      code: `
+      interface Props {
+        value?: string;
+      }
+      
+      // without the | null, all ok, with it, it is broken
+      function Test ({ value }: Props): React.ReactElement<Props> | null {
+        if (!value) {
+          return null;
+        }
+      
+        return <div>{value}</div>;
+      }`,
+      parser: parsers.TYPESCRIPT_ESLINT
+    },
+    {
+      code: `
+      interface Props {
+        value?: string;
+      }
+      
+      // without the | null, all ok, with it, it is broken
+      function Test ({ value }: Props): React.ReactElement<Props> | null {
+        if (!value) {
+          return <div>{value}</div>;;
+        }
+      
+        return null;
+      }`,
+      parser: parsers.TYPESCRIPT_ESLINT
+    },
+    {
+      code: `
+      interface Props {
+        value?: string;
+      }
+      const Hello = (props: Props) => {
+        if(props.value) {
+          return <div></div>;
+        }
+        return null;
+      }`,
       parser: parsers.TYPESCRIPT_ESLINT
     }
   ],
@@ -4948,6 +4992,21 @@ ruleTester.run('prop-types', rule, {
       },
       {
         message: '\'ordering\' is missing in props validation'
+      }]
+    },
+    {
+      code: `
+      interface Props {
+      }
+      const Hello = (props: Props) => {
+        if(props.value) {
+          return <div></div>;
+        }
+        return null;
+      }`,
+      parser: parsers.TYPESCRIPT_ESLINT,
+      errors: [{
+        message: '\'value\' is missing in props validation'
       }]
     }
   ]

@@ -3404,7 +3404,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         ': Props): JSX.Element {',
         'const handleVerifySubmit = ({',
         '  otp,',
-        ' }) => {',
+        ' }: {otp:string}) => {',
         '  dispatch(',
         '    verifyOTPPhone({',
         '      otp,',
