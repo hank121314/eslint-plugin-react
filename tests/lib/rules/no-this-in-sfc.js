@@ -198,10 +198,11 @@ ruleTester.run('no-this-in-sfc', rule, {
     function Foo(props) {
       if (this.props.foo) {
         something();
+        return <div>{this.props.foo}</div>
       }
       return null;
     }`,
-    errors: [{message: ERROR_MESSAGE}]
+    errors: [{message: ERROR_MESSAGE}, {message: ERROR_MESSAGE}]
   }, {
     code: 'const Foo = (props) => <span>{this.props.foo}</span>',
     errors: [{message: ERROR_MESSAGE}]
@@ -224,7 +225,7 @@ ruleTester.run('no-this-in-sfc', rule, {
         function Bar(){
           return () => {
             this.something();
-            return null;
+            return <div></div>;
           }
         }
       }

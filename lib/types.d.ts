@@ -15,6 +15,7 @@ declare global {
 
   interface Context extends eslint.SourceCode {
     getFirstTokens(node: estree.Node | ASTNode, options?: eslint.SourceCode.CursorWithCountOptions): eslint.AST.Token[];
+    getSourceCode(): eslint.SourceCode;
   }
 
   type TypeDeclarationBuilder = (annotation: ASTNode, parentName: string, seen: Set<typeof annotation>) => object;
