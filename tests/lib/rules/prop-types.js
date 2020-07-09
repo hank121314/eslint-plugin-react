@@ -2503,7 +2503,7 @@ ruleTester.run('prop-types', rule, {
           return <div aria-label={ariaLabel} />
         }
       `,
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     },
     {
       code: `
@@ -2519,7 +2519,7 @@ ruleTester.run('prop-types', rule, {
       
         return <div>{value}</div>;
       }`,
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     },
     {
       code: `
@@ -2535,7 +2535,7 @@ ruleTester.run('prop-types', rule, {
       
         return null;
       }`,
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     },
     {
       code: `
@@ -2548,7 +2548,67 @@ ruleTester.run('prop-types', rule, {
         }
         return null;
       }`,
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
+    },
+    {
+      code: `
+      interface infoLibTable {
+        removeCollection(): Array<string>;
+      }
+     
+      interface InfoLibTableProps extends ReturnType<(dispatch: storeDispatch) => infoLibTable> {
+      }
+     
+      const App = (props: InfoLibTableProps) => {
+        props.removeCollection(); 
+        return <div></div>;
+      }
+      `,
+      parser: parsers['@TYPESCRIPT_ESLINT']
+    },
+    {
+      code: `
+      interface infoLibTable {
+        removeCollection: () => Array<string>
+      }
+     
+      interface InfoLibTableProps extends ReturnType<(dispatch: storeDispatch) => infoLibTable> {
+      }
+     
+      const App = (props: InfoLibTableProps) => {
+        props.removeCollection(); 
+        return <div></div>;
+      }
+      `,
+      parser: parsers['@TYPESCRIPT_ESLINT']
+    },
+    {
+      code: `
+      interface InfoLibTableProps extends ReturnType<(dispatch: storeDispatch) => {
+        removeCollection:  () => Array<string>,
+      }> {
+      }
+     
+      const App = (props: InfoLibTableProps) => {
+        props.removeCollection(); 
+        return <div></div>;
+      }
+      `,
+      parser: parsers['@TYPESCRIPT_ESLINT']
+    },
+    {
+      code: `
+      interface InfoLibTableProps extends ReturnType<(dispatch: storeDispatch) => ({
+        removeCollection:  () => Array<string>,
+      })> {
+      }
+     
+      const App = (props: InfoLibTableProps) => {
+        props.removeCollection(); 
+        return <div></div>;
+      }
+      `,
+      parser: parsers['@TYPESCRIPT_ESLINT']
     }
   ],
 
@@ -5005,9 +5065,83 @@ ruleTester.run('prop-types', rule, {
         }
         return null;
       }`,
-      parser: parsers.TYPESCRIPT_ESLINT,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
       errors: [{
         message: '\'value\' is missing in props validation'
+      }]
+    },
+    {
+      code: `
+      interface Props{
+        value: string;
+      }
+
+      function Test ({ value, x }: Props): React.ReactElement<Props> | null {
+        if (x) {
+          return false;
+        } else if (false) {
+          return '1245';
+        } else {
+          switch (value) {
+            case 1: {
+              if (true) {
+                switch (value) {
+                  case 1: {
+                    if (true) {
+                    } else if (false) {
+                      return (<>
+                              {x.map((iter) => <div className={iter}></div>)};
+                              </>)
+                    }
+                  }
+                  default:
+                    return null;
+                }
+              } else if (false) {
+                return false;
+              }
+            }
+            default:
+              return null;
+          }
+        }
+        switch (value) {
+          case 1: 
+            if (true) return 1234;
+            else if (false) return false;
+          default:
+            return null;
+        }
+      }
+      `,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
+      errors: [{
+        message: '\'x\' is missing in props validation'
+      },
+      {
+        message: '\'x.map\' is missing in props validation'
+      }]
+    },
+    {
+      code: `
+      import React from 'react';
+
+      type Props = {
+        number: number;
+      };
+
+      export default (props: Props) => {
+        const { number, x } = props;
+
+        if (number === 0) {
+          return <p>Number is 0</p>;
+        }
+
+        return null;
+      };`,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
+      errors: [{
+        message: '\'x\' is missing in props validation'
       }]
     }
   ]

@@ -3226,7 +3226,7 @@ ruleTester.run('no-unused-prop-types', rule, {
           bar,
         };
       `,
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     }, {
       code: `
         class Foo extends React.Component {
@@ -3278,7 +3278,7 @@ ruleTester.run('no-unused-prop-types', rule, {
           }
         }
       `,
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     },
     {
       code: [
@@ -3287,7 +3287,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '}',
         'export default Thing;'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     },
     // this test checks that there is no crash if no declaration is found (TSTypeLiteral).
     {
@@ -3296,7 +3296,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '    return <div {...props}></div>;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     },
     // this test checks that there is no crash if no declaration is found (TSTypeReference).
     {
@@ -3305,7 +3305,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '    return <div {...props}></div>;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     },
     {
       // Omit, etc, cannot be handled, but must not trigger an error
@@ -3314,7 +3314,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '    return <div>{props.b}</div>;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     },
     {
       // neither TSTypeReference or TSTypeLiteral, we do nothing. Weird case
@@ -3323,7 +3323,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '    return <div>{props.firstname}</div>;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     },
     {
       // neither TSTypeReference or TSTypeLiteral, we do nothing. Weird case
@@ -3332,7 +3332,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '    return <div>{props?.firstname}</div>;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     }, {
       code: [
         'interface Props {',
@@ -3344,7 +3344,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '  return <div aria-label={ariaLabel} />;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     }, {
       code: [
         'interface Props {',
@@ -3356,7 +3356,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '  return <div aria-label={ariaLabel} />;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     }, {
       code: [
         'interface Props {',
@@ -3368,7 +3368,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '  return <div aria-label={props[1234]} />;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     }, {
       code: [
         'interface Props {',
@@ -3380,7 +3380,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '  return <div aria-label={props[1234]} />;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     }, {
       code: [
         'interface Props {',
@@ -3392,7 +3392,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '  return <div aria-label={props[\'1234\']} />;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     },
     {
       code: [
@@ -3414,7 +3414,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         'return <div aria-label={props[\'1234\']} />;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     }, {
       code: [
         'interface Props {',
@@ -3425,7 +3425,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         ')',
         'export default Component'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT
+      parser: parsers['@TYPESCRIPT_ESLINT']
     }
   ],
 
@@ -5448,7 +5448,7 @@ ruleTester.run('no-unused-prop-types', rule, {
           barUnused,
         };
       `,
-      parser: parsers.TYPESCRIPT_ESLINT,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
       errors: [{
         message: '\'fooUnused\' PropType is defined but prop is never used'
       }, {
@@ -5505,7 +5505,7 @@ ruleTester.run('no-unused-prop-types', rule, {
           }
         }
       `,
-      parser: parsers.TYPESCRIPT_ESLINT,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
       errors: [{
         message: '\'prevPropUnused\' PropType is defined but prop is never used'
       }, {
@@ -5562,7 +5562,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '    return <div>Hello {props.firstname}</div>;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
       errors: [
         {
           message: '\'lastname\' PropType is defined but prop is never used'
@@ -5577,7 +5577,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '    return <div>Hello {props?.firstname}</div>;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
       errors: [
         {
           message: '\'lastname\' PropType is defined but prop is never used'
@@ -5592,7 +5592,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '    return <div>Hello {props.firstname}</div>;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
       errors: [
         {
           message: '\'lastname\' PropType is defined but prop is never used'
@@ -5607,7 +5607,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '    return <div>Hello {props?.firstname}</div>;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
       errors: [
         {
           message: '\'lastname\' PropType is defined but prop is never used'
@@ -5624,7 +5624,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '    return <div>Hello {firstname}</div>;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
       errors: [
         {
           message: '\'lastname\' PropType is defined but prop is never used'
@@ -5641,7 +5641,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '    return <div>Hello {firstname}</div>;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
       errors: [
         {
           message: '\'lastname\' PropType is defined but prop is never used'
@@ -5658,7 +5658,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '    return <div>Hello {bar}</div>;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
       errors: [
         {
           message: '\'foo\' PropType is defined but prop is never used'
@@ -5674,7 +5674,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '  return <div />;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
       errors: [
         {
           message: '\'aria-label\' PropType is defined but prop is never used'
@@ -5690,7 +5690,7 @@ ruleTester.run('no-unused-prop-types', rule, {
         '  return <div />;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
       errors: [
         {
           message: '\'1234\' PropType is defined but prop is never used'
@@ -5703,12 +5703,84 @@ ruleTester.run('no-unused-prop-types', rule, {
         '    return <div>Hello {firstname}</div>;',
         '}'
       ].join('\n'),
-      parser: parsers.TYPESCRIPT_ESLINT,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
       errors: [
         {
           message: '\'lastname\' PropType is defined but prop is never used'
         }
       ]
+    },
+    {
+      // test same name of interface should be merge
+      code: `
+      interface Foo {
+        x: number;
+      }
+
+      interface Foo {
+        z: string;
+      }
+    
+      interface Bar extends Foo {
+        y: string;
+      }
+    
+      const Baz = ({ x, y }: Bar) => (
+        <span>
+            {x}
+            {y}
+        </span>
+      );`,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
+      errors: [{
+        message: '\'z\' PropType is defined but prop is never used'
+      }]
+    },
+    {
+      // test extends
+      code: `
+      interface Foo {
+        x: number;
+      }
+    
+      interface Bar extends Foo {
+        y: string;
+      }
+    
+      const Baz = ({ x }: Bar) => (
+        <span>
+            {x}
+        </span>
+      );`,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
+      errors: [{
+        message: '\'y\' PropType is defined but prop is never used'
+      }]
+    },
+    {
+      // test same name merge and extends
+      code: `
+      interface Foo {
+        x: number;
+      }
+
+      interface Foo {
+        z: string;
+      }
+    
+      interface Bar extends Foo {
+        y: string;
+      }
+    
+      const Baz = ({ x }: Bar) => (
+        <span>
+            {x}
+        </span>
+      );`,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
+      errors: [{
+        message: '\'z\' PropType is defined but prop is never used'
+      }, {message: '\'y\' PropType is defined but prop is never used'}]
     }
 
     /* , {
