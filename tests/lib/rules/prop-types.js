@@ -2609,6 +2609,62 @@ ruleTester.run('prop-types', rule, {
       }
       `,
       parser: parsers['@TYPESCRIPT_ESLINT']
+    },
+    {
+      code: `
+      type User = {
+        user: string;
+      }
+      
+      type Props = User & {
+        userId: string;
+      };
+
+      export default (props: Props) => {
+        const { userId, user } = props;
+      
+        if (userId === 0) {
+          return <p>userId is 0</p>;
+        }
+      
+        return null;
+      };
+      `,
+      parser: parsers['@TYPESCRIPT_ESLINT']
+    },
+    {
+      code: `
+      type User = {
+        user: string;
+      }
+
+      type UserProps = {
+        userId: string;
+      }
+
+      type AgeProps = {
+        age: number;
+      }
+      
+      type BirthdayProps = {
+        birthday: string;
+      }
+      
+      type intersectionUserProps = AgeProps & BirthdayProps;
+      
+      type Props = User & UserProps & intersectionUserProps;
+
+      export default (props: Props) => {
+        const { userId, user, birthday, age } = props;
+      
+        if (userId === 0) {
+          return <p>userId is 0</p>;
+        }
+      
+        return null;
+      };
+      `,
+      parser: parsers['@TYPESCRIPT_ESLINT']
     }
   ],
 
@@ -5142,6 +5198,79 @@ ruleTester.run('prop-types', rule, {
       parser: parsers['@TYPESCRIPT_ESLINT'],
       errors: [{
         message: '\'x\' is missing in props validation'
+      }]
+    },
+    {
+      code: `
+      type User = {
+        user: string;
+      }
+      
+      type Props = User & {
+      };
+
+      export default (props: Props) => {
+        const { userId, user } = props;
+      
+        if (userId === 0) {
+          return <p>userId is 0</p>;
+        }
+      
+        return null;
+      };
+      `,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
+      errors: [{
+        message: '\'userId\' is missing in props validation'
+      }]
+    },
+    {
+      code: `
+      type User = {
+      }
+      
+      type Props = User & {
+        userId
+      };
+
+      export default (props: Props) => {
+        const { userId, user } = props;
+      
+        if (userId === 0) {
+          return <p>userId is 0</p>;
+        }
+      
+        return null;
+      };
+      `,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
+      errors: [{
+        message: '\'user\' is missing in props validation'
+      }]
+    },
+    {
+      code: `
+      type User = {
+        user: string;
+      }
+      type UserProps = {
+      }
+      
+      type Props = User & UserProps;
+
+      export default (props: Props) => {
+        const { userId, user } = props;
+      
+        if (userId === 0) {
+          return <p>userId is 0</p>;
+        }
+      
+        return null;
+      };
+      `,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
+      errors: [{
+        message: '\'userId\' is missing in props validation'
       }]
     }
   ]

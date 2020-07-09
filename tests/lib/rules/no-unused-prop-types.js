@@ -5781,6 +5781,45 @@ ruleTester.run('no-unused-prop-types', rule, {
       errors: [{
         message: '\'z\' PropType is defined but prop is never used'
       }, {message: '\'y\' PropType is defined but prop is never used'}]
+    },
+    {
+      code: `
+      type User = {
+        user: string;
+      }
+
+      type UserProps = {
+        userId: string;
+      }
+
+      type AgeProps = {
+        age: number;
+      }
+      
+      type BirthdayProps = {
+        birthday: string;
+      }
+      
+      type intersectionUserProps = AgeProps & BirthdayProps;
+      
+      type Props = User & UserProps & intersectionUserProps;
+
+      export default (props: Props) => {
+        const { userId, user } = props;
+      
+        if (userId === 0) {
+          return <p>userId is 0</p>;
+        }
+      
+        return null;
+      };
+      `,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
+      errors: [{
+        message: '\'age\' PropType is defined but prop is never used'
+      }, {
+        message: '\'birthday\' PropType is defined but prop is never used'
+      }]
     }
 
     /* , {
