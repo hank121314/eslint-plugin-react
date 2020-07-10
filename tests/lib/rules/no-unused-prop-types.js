@@ -5783,6 +5783,31 @@ ruleTester.run('no-unused-prop-types', rule, {
       }, {message: '\'y\' PropType is defined but prop is never used'}]
     },
     {
+      // test same name merge and extends
+      code: `
+      interface Foo {
+        x: number;
+      }
+
+      interface Foo {
+        z: string;
+      }
+    
+      interface Foo {
+        y: string;
+      }
+    
+      const Baz = ({ x }: Foo) => (
+        <span>
+            {x}
+        </span>
+      );`,
+      parser: parsers['@TYPESCRIPT_ESLINT'],
+      errors: [{
+        message: '\'z\' PropType is defined but prop is never used'
+      }, {message: '\'y\' PropType is defined but prop is never used'}]
+    },
+    {
       code: `
       type User = {
         user: string;

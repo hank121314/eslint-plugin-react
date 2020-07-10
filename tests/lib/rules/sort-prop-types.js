@@ -481,22 +481,6 @@ ruleTester.run('sort-prop-types', rule, {
     }
     `,
     parser: parsers['@TYPESCRIPT_ESLINT']
-  }, {
-    code: `
-    type Props = {
-      b: string;
-      z: number;
-      a: any;
-    }
-    export function B({a, b}: Props) {
-      return (
-        <p>
-          {a} {b}
-        </p>
-      );
-    }
-    `,
-    parser: parsers['@TYPESCRIPT_ESLINT']
   }],
 
   invalid: [{
@@ -1796,6 +1780,78 @@ ruleTester.run('sort-prop-types', rule, {
       column: 9,
       type: 'Property'
     }]
+  },
+  {
+    code: `
+    type Props = {
+      z: number;
+      b: string;
+      a: any;
+    }
+    export function B({a, b}: Props) {
+      return (
+        <p>
+          {a} {b}
+        </p>
+      );
+    }
+    `,
+    parser: parsers['@TYPESCRIPT_ESLINT'],
+    errors: [{
+      message: ERROR_MESSAGE,
+      line: 4,
+      column: 7,
+      type: 'TSPropertySignature'
+    }, {
+      message: ERROR_MESSAGE,
+      line: 5,
+      column: 7,
+      type: 'TSPropertySignature'
+    }]
+  },
+  {
+    code: `
+    interface Props {
+      z: string;
+      y: string;
+      x: string;
+    }
+    interface Props {
+      c: number;
+      b: string;
+      a: any;
+    }
+    export function B({a, b}: Props) {
+      return (
+        <p>
+          {a} {b}
+        </p>
+      );
+    }
+    `,
+    parser: parsers['@TYPESCRIPT_ESLINT'],
+    errors: [{
+      message: ERROR_MESSAGE,
+      line: 4,
+      column: 7,
+      type: 'TSPropertySignature'
+    }, {
+      message: ERROR_MESSAGE,
+      line: 5,
+      column: 7,
+      type: 'TSPropertySignature'
+    }, {
+      message: ERROR_MESSAGE,
+      line: 9,
+      column: 7,
+      type: 'TSPropertySignature'
+    }, {
+      message: ERROR_MESSAGE,
+      line: 10,
+      column: 7,
+      type: 'TSPropertySignature'
+    }]
+  }
     // output: `
     //   const shape = {
     //     a: PropTypes.any,
@@ -1811,5 +1867,5 @@ ruleTester.run('sort-prop-types', rule, {
     //     x: PropTypes.shape(shape)
     //   };
     // `
-  }]
+  ]
 });
