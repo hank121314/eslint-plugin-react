@@ -467,6 +467,36 @@ ruleTester.run('sort-prop-types', rule, {
     options: [{
       sortShapeProp: true
     }]
+  }, {
+    code: `
+    type Props = {
+      a: any;
+      b: string;
+      z: number;
+    }
+    class Component extends React.Component<Props, {}> {
+      render() {
+        return <div />;
+      }
+    }
+    `,
+    parser: parsers['@TYPESCRIPT_ESLINT']
+  }, {
+    code: `
+    type Props = {
+      b: string;
+      z: number;
+      a: any;
+    }
+    export function B({a, b}: Props) {
+      return (
+        <p>
+          {a} {b}
+        </p>
+      );
+    }
+    `,
+    parser: parsers['@TYPESCRIPT_ESLINT']
   }],
 
   invalid: [{
